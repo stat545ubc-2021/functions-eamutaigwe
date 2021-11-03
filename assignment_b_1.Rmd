@@ -138,3 +138,65 @@ The function throws an error, since a numeric variable was used in place of a ca
 ```{r error = TRUE}
 summarize_data(gapminder, continent, country)
 ```
+
+
+## 4. Exercise 4: Test the function
+
+I will use the `expect_()` function in the `test_that` package to test the newly created `summarize_data()` function
+
+```{r}
+# First, compute summary statistics manually
+summary1 <- penguins %>% 
+  group_by(species) %>%
+  summarize(mean = mean(body_mass_g, na.rm = TRUE))
+# Extract the mean column
+  summary1$mean
+
+  
+# Compute summary statistics using the summarize_data function
+summary2 <- summarize_data(penguins, species, body_mass_g)
+# Extract the tibble, then the mean column
+  summary2[[1]]$mean
+
+test_that("the two means are identical", {
+  expect_identical(summary1$mean, summary2[[1]]$mean)})
+
+test_that("the function returns a list", {
+  expect_type(summarize_data(apt_buildings, window_type, no_of_storeys), "list")})
+  
+test_that("the use of a numeric variable for x returns an error", {
+  expect_error(summarize_data(apt_buildings, year_built, no_of_storeys))})
+
+test_that("the two mean vectors have NAs", {
+  na_present_1 <- penguins %>% 
+                  group_by(species) %>% 
+                  summarise(mean = mean(body_mass_g))
+  na_present_2 <- summarize_data(penguins, species, body_mass_g, na.rm = FALSE)
+  expect_equal(na_present_1$mean, na_present_2[[1]]$mean)})
+  
+test_that("silent when function successfully creates a boxplot", {
+  plot <- summarize_data(gapminder, continent, lifeExp)
+  expect_silent(print(plot[[2]]))})
+
+```
+
+
+**I used 5 `expect_()` functions to test the `summarize_data` function and the tests passed.** 
+
+**First,** I computed summary statistics manually, extracted the mean. I also computed summary statistics using the `summarize_data` function and extracted the mean. I then used `expect_identical()` to test if the two means are identical.
+
+**Second,** I used `expect_type()` to test if the `summarize_data` function returns a `list`.
+
+**Third,** I used `expect_error()` to test if using a numeric variable instead of a categorical variable in the `summarize_data` function would pass. The test passed because `expect_error()` is expecting an error.
+
+**Fourth,** I computed summary statistics manually, extracted the mean vector, this time, not removing `NAs`. I also used the `summarize_data` function to compute summary statistics, with `na.rm = FALSE`, and then extracted the mean vector. I used `expect_equal()` to test if the two mean vectors have `NAs`.
+
+**Fifth,** I used `expect_silent()` to test if the `summarize_data` function successfully creates a boxplot.
+
+
+**References**
+
+1. https://www.youtube.com/watch?v=3nDgR7l5Tps
+2. http://adv-r.had.co.nz/Computing-on-the-language.html
+3. https://stackoverflow.com/questions/53761025/
+   testthatexpect-silent-does-not-seem-to-notice-ggplot2-errors
