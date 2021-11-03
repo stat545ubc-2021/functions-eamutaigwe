@@ -21,4 +21,4 @@ This mini-project is part of the assignments in the STAT545B course. It involves
 
 `.md file`: A text editor can be used to read and edit the markdown file. However, apart from an .md file that does not have a source file (.Rmd file), it is advisable to edit the .Rmd file and re-knit it to a .md file if an edit needs to be made to the original .md file.
 
-`.rmd file`: Integrated Development Environment like RStudio can be used to open the file, edit and run the code chunks embedded. You have the option to render the file into markdown, HTML or PDF formats with RStudio IDE.
+`.rmd file`: An Integrated Development Environment like RStudio can be used to open the file, edit and run the code chunks embedded. You have the option to render the file into markdown, HTML or PDF formats with RStudio IDE.
