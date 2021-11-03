@@ -161,6 +161,8 @@ boxplot.
 for x and see what the outcome would be.**
 
 ``` r
+# Example 3: Use a numeric variable in place of a categorical variable for x
+
 summarize_data(gapminder, gdpPercap, lifeExp)
 ```
 
@@ -174,6 +176,8 @@ of a categorical variable.
 expected and see if the function would throw an error**
 
 ``` r
+# Example 4: Use a categorical variable in place of a numeric variable for y
+
 summarize_data(gapminder, continent, country)
 ```
 
@@ -210,21 +214,21 @@ test_that("the two means are identical", {
   expect_identical(summary1$mean, summary2[[1]]$mean)})
 ```
 
-    ## Test passed 🎊
+    ## Test passed 🥳
 
 ``` r
 test_that("the function returns a list", {
   expect_type(summarize_data(apt_buildings, window_type, no_of_storeys), "list")})
 ```
 
-    ## Test passed 😸
+    ## Test passed 🥳
 
 ``` r
 test_that("the use of a numeric variable for x returns an error", {
   expect_error(summarize_data(apt_buildings, year_built, no_of_storeys))})
 ```
 
-    ## Test passed 😀
+    ## Test passed 🌈
 
 ``` r
 test_that("the two mean vectors have NAs", {
@@ -235,7 +239,7 @@ test_that("the two mean vectors have NAs", {
   expect_equal(na_present_1$mean, na_present_2[[1]]$mean)})
 ```
 
-    ## Test passed 🥳
+    ## Test passed 🎉
 
 ``` r
 test_that("silent when function successfully creates a boxplot", {
@@ -245,7 +249,7 @@ test_that("silent when function successfully creates a boxplot", {
 
 ![](assignment_b_1_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-    ## Test passed 😀
+    ## Test passed 🌈
 
 **I used 5 `expect_()` functions to test the `summarize_data` function
 and the tests passed.**
