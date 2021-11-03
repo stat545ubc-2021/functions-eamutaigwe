@@ -96,3 +96,45 @@ The new function takes a tibble or data frame, removes all missing values by def
 To fortify the function, I generalized it, included the option to intentionally allow missing values by changing the default from `na.rm = TRUE` to `na.rm = FALSE`. I also documented the function.
 
 With the code established above, I can easily pass the new function `summarize_data` to other datasets that meet the criteria set in the code.
+
+
+## 3. Exercise 3: Include examples
+
+I will use the following examples to demonstrate the usage of the `summarize_data` function.
+
+```{r}
+# Example 1: Compute summary statistics using the palmerpenguins::penguins data
+
+summarize_data(penguins, species, bill_length_mm)
+
+```
+
+The function call above groups the penguins data by `species`, computes summary statistics on `bill_length_mm`, produces a tibble and a boxplot.
+
+
+
+```{r}
+# Example 2: Compute summary statistics using the gapminder::gapminder data
+
+summarize_data(gapminder, continent, lifeExp)
+```
+
+The function call above groups the `gapminder` data by `continent`, computes summary statistics on `lifeExp`, produces a tibble and a boxplot.
+
+
+
+**Now, let me use a numeric variable in place of a categorical variable for x and see what the outcome would be.**
+
+```{r error=TRUE}
+
+summarize_data(gapminder, gdpPercap, lifeExp)
+```
+
+The function throws an error, since a numeric variable was used in place of a categorical variable.
+
+
+**I will also use a categorical variable where a numeric variable is expected and see if the function would throw an error**
+
+```{r error = TRUE}
+summarize_data(gapminder, continent, country)
+```
