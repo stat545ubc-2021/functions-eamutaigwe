@@ -126,6 +126,7 @@ The function call above groups the `gapminder` data by `continent`, computes sum
 **Now, let me use a numeric variable in place of a categorical variable for x and see what the outcome would be.**
 
 ```{r error=TRUE}
+# Example 3: Use a numeric variable in place of a categorical variable for x
 
 summarize_data(gapminder, gdpPercap, lifeExp)
 ```
@@ -136,6 +137,8 @@ The function throws an error, since a numeric variable was used in place of a ca
 **I will also use a categorical variable where a numeric variable is expected and see if the function would throw an error**
 
 ```{r error = TRUE}
+# Example 4: Use a categorical variable in place of a numeric variable for y
+
 summarize_data(gapminder, continent, country)
 ```
 
