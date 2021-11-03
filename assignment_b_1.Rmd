@@ -36,3 +36,63 @@ suppressMessages(library(testthat))
 suppressMessages(library(datateachr))
 suppressMessages(library(roxygen2))
 ```
+
+
+## 2. Exercises 1 and 2: Make a function and document it
+
+Here, I will make, fortify and document a function that takes a tibble or data frame, computes summary statistics on a numeric variable grouped by a categorical variable, and outputs a tibble or data frame and a boxplot.
+
+```{r}
+# Document function using the roxygen2 package
+
+#' Compute summary statistics, produce a tibble or data frame and a boxplot
+#' 
+#' This function computes summary statistics on a numeric variable 
+#' grouped by a categorical variable. The summary statistics include 
+#' mean, median, minimum, maximum, and count. It also 
+#' produces a boxplot.
+#' 
+#' @param df Tibble or data frame containing variables for computing summary statistics. 
+#' Name is easily recognizable.
+#' @param x A categorical variable by which rows are grouped. 
+#' It is named x because it is more generally used and easy to identify.
+#' @param y A numeric variable for computing summary statistics. 
+#' It is named y because it is more generally used and easy to identify.
+#' @return A tibble or data frame containing summary statistics and a boxplot.
+
+
+summarize_data <- function(df, x, y, na.rm = TRUE) {
+    val1 <- eval(substitute(x), df)
+    val2 <- eval(substitute(y), df)
+
+    if (!(is.character(val1) || is.factor(val1))) {
+      stop('This function only works with a categorical input as x.\n',
+           'You have provided an object of class: ', class(val1))
+    }
+
+    if (!is.numeric(val2)) {
+      stop("This function only works with a numeric input as y.\n",
+           "You have provided a variable of class: ", class(val2))
+    }
+  
+    summary_df <- df %>%
+    group_by({{ x }}) %>%
+    summarise(mean = mean({{ y }}, na.rm = na.rm),
+              median = median({{ y }}, na.rm = na.rm),
+              min = min({{ y }}, na.rm = na.rm),
+              max = max({{ y }}, na.rm = na.rm),
+              n = n())
+  
+    summary_plot <- df %>% ggplot(aes({{ x }}, {{ y }})) +
+    geom_boxplot()
+  
+    return(list(summary_df, summary_plot))
+}
+
+```
+
+The new function takes a tibble or data frame, removes all missing values by default (user can specify otherwise), groups the data by a categorical variable, and calculates mean, median, minimum, maximum, and count of a numeric variable. It returns a tibble or data frame and a boxplot.
+
+To fortify the function, I generalized it, included the option to intentionally allow missing values by changing the default from `na.rm = TRUE` to `na.rm = FALSE`. I also documented the function.
+
+With the code established above, I can easily pass the new function `summarize_data` to other datasets that meet the criteria set in the code.
